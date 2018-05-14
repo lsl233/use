@@ -1,10 +1,16 @@
+///<reference path="../node_modules/@types/node/index.d.ts"/>
 import * as Koa from 'koa';
 import router from './router';
-import render from './utils/render'
+import koaEjs from './utils/render'
+import * as path from "path";
 
 const app = new Koa();
 
-app.use(render);
+koaEjs(app, {
+    root: path.join(__dirname, 'views'),
+});
+
+app.use(async (ctx, next) => router.router(ctx, next));
 
 app.use(async (ctx, next) => {
     const start = Date.now();
@@ -13,8 +19,6 @@ app.use(async (ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
 
-app.use(router.routes());
+app.listen(3001);
 
-app.listen(3000);
-
-console.info('koa server start', 3000);
+console.info('koa server start', 3001);
