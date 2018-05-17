@@ -1,17 +1,9 @@
 import Router from './router';
+import page from './page';
+import api from './api';
 
 const router = new Router();
-
-router.get('/', async (ctx: any) => {
-    await ctx.render('index');
-});
-
-router.get('/index', async (ctx: any) => {
-    await ctx.render('index');
-});
-
-router.get('/aaa', async (ctx: any) => {
-    await ctx.render('index');
-});
+page(router);
+api(router);
 
 export default router;

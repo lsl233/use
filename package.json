@@ -7,7 +7,8 @@
     "watch-server": "nodemon --watch '*.ts' -e ts,tsx --exec 'ts-node' ./src/app.ts",
     "start": "tsc && node dist/*.js",
     "dev": "ts-node ./src/app.ts",
-    "tsc": "tsc ./src/app.ts"
+    "tsc": "tsc ./src/app.ts",
+    "test": "ts-node ./src/utils/test.ts"
   },
   "author": "",
   "license": "ISC",

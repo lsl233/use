@@ -1,13 +1,13 @@
 ///<reference path="../node_modules/@types/node/index.d.ts"/>
 import * as Koa from 'koa';
 import router from './router';
-import koaEjs from './utils/render'
+import koaEjs from './util/render'
 import * as path from "path";
 
 const app = new Koa();
 
 koaEjs(app, {
-    root: path.join(__dirname, 'views'),
+    root: path.join(__dirname, 'view'),
 });
 
 app.use(async (ctx, next) => router.router(ctx, next));

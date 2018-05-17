@@ -1,7 +1,6 @@
 import * as ejs from 'ejs';
 import * as fs from "fs";
 import * as path from "path";
-import {settings} from "cluster";
 
 const defaultOptions = {
     root: './',
@@ -25,9 +24,8 @@ interface Options {
     writeResp?: boolean;
 }
 
-function koaEjs (app: any, options: any) {
+function koaEjs (app: any, options: any): void {
     options = Object.assign({}, defaultOptions, options);
-
     async function render (view: string, data: object) {
         const ctx:any = this;
         const viewPath:string = path.join(options.root, view) + '.' + options.viewExt;
@@ -36,12 +34,12 @@ function koaEjs (app: any, options: any) {
             temp = fs.readFileSync(viewPath, 'utf-8');
         } catch (error) {
             console.error('fs read file sync::', error);
-            return ctx.body = '未找到temp';
+            ctx.body = '未找到temp';
+            return;
         }
-        const html = ejs.render(temp, data);
-        ctx.body = html;
+        ctx.body = ejs.render(temp, data);
     }
     app.context.render = render;
 }
 
-export default koaEjs
+export default koaEjs;

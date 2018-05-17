@@ -14,23 +14,19 @@ class Router {
     constructor () {}
 
     router(ctx: Ctx, next: () => void): void {
-        console.log('router map:', this.getRouterMap(), ctx.url);
-        if (this.routerMap[ctx.url] || this.routerMap[ctx.url][ctx.method]) {
+        if (this.routerMap[ctx.url] && this.routerMap[ctx.url][ctx.method]) {
             this.routerMap[ctx.url][ctx.method](ctx, next);
         } else {
-            next();
+            console.error(ctx.url, 404);
+            ctx.status = 404;
         }
-    }
-
-    getRouterMap () {
-        return this.routerMap;
     }
 
     isUrlExist (url: string): boolean {
         return !!this.routerMap[url];
     }
 
-    addMethod (url: string, callback: any) {
+    private addMethod (url: string, callback: any) {
         if (!this.isUrlExist(url)) {
             this.routerMap[url] = {};
         }
